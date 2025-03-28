@@ -7,7 +7,7 @@ ruby '3.1.6'
 gem 'rails', '~> 7.0.8', '>= 7.0.8.7'
 
 # Use pg as the database for Active Record
-gem "pg", "~> 1.1"
+gem 'pg', '~> 1.1'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
@@ -45,3 +45,5 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
+
+gem 'concurrent-ruby', '1.3.4'
