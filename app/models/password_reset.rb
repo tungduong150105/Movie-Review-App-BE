@@ -7,7 +7,7 @@ class PasswordReset
     @user = User.find_by(email: email)
     return unless @user
 
-    @user.password_reset_token = SecureRandom.urlsafe_base64
+    @user.password_reset_token = (SecureRandom.random_number(9e5) + 1e5).to_i
     @user.password_reset_token_expires_at = Time.now + 15.minutes
     @user.save
     UserMailer.with(user: @user).reset_password_email.deliver_now
