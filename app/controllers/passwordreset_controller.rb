@@ -22,7 +22,10 @@ class PasswordresetController < ApplicationController
 
   def update
     @user = PasswordReset.find_by_valid_token(params[:token])
-    return unless @user
+    if @user.nil?
+      render json: { message: 'Token invalid or expired' }, status: :unauthorized
+      return
+    end
 
     if @user.update(password_reset_params)
       render json: { message: 'Password reset successful' }, status: :ok
