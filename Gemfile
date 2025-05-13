@@ -52,3 +52,7 @@ gem 'concurrent-ruby', '1.3.4'
 gem 'jwt', '~> 2.7'
 # gem 'sprockets/railtie'
 gem 'sprockets-rails', require: 'sprockets/railtie'
+
+gem "dockerfile-rails", ">= 1.7", group: :development
+
+gem "redis", "~> 5.4"
