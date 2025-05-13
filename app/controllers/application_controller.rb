@@ -20,11 +20,10 @@ class ApplicationController < ActionController::API
   def current_user
     return unless decode_token
 
-    user_id = decode_token[0]['user_id']
-    @user = User.find_by(id: user_id)
+    decode_token[0]['user_id']
   end
 
   def authorized
-    render json: { error: 'Not Authorized' }, status: :unauthorized unless current_user
+    render json: { error: 'Not Authorized', message: current_user }, status: :unauthorized unless current_user
   end
 end

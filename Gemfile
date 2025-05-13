@@ -50,3 +50,5 @@ end
 gem 'active_model_serializers'
 gem 'concurrent-ruby', '1.3.4'
 gem 'jwt', '~> 2.7'
+# gem 'sprockets/railtie'
+gem 'sprockets-rails', require: 'sprockets/railtie'

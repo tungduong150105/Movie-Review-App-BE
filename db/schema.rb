@@ -10,17 +10,45 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 20_250_422_091_032) do
+ActiveRecord::Schema[7.0].define(version: 2025_05_13_014553) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'users', force: :cascade do |t|
-    t.string 'email'
-    t.string 'username'
-    t.string 'password_digest'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.string 'password_reset_token'
-    t.datetime 'password_reset_token_expires_at'
+  create_table "forums", force: :cascade do |t|
+    t.string "movie_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
+
+  create_table "messages", force: :cascade do |t|
+    t.bigint "forum_id", null: false
+    t.bigint "user_id", null: false
+    t.string "message"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["forum_id"], name: "index_messages_on_forum_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "username"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "password_reset_token"
+    t.datetime "password_reset_token_expires_at"
+  end
+
+  create_table "watchlists", force: :cascade do |t|
+    t.string "movie_id"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_watchlists_on_user_id"
+  end
+
+  add_foreign_key "messages", "forums"
+  add_foreign_key "messages", "users"
+  add_foreign_key "watchlists", "users"
 end
