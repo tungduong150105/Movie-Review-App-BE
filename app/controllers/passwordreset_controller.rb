@@ -1,5 +1,5 @@
 class PasswordresetController < ApplicationController
-  skip_before_action :authorized, only: %i[new create check update]
+  skip_before_action :authenticate, only: %i[new create check update]
   def new
     @password_reset = PasswordReset.new
   end

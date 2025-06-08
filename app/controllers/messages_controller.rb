@@ -1,8 +1,9 @@
 class MessagesController < ApplicationController
+  before_action :authenticate
   def create
     @message = Message.new(message_params)
     @message.forum_id = find_forum
-    @message.user_id = find_user
+    @message.user_id = current_user.id
     if @message.save
       render json: { message: 'Success' }, status: :created
     else
@@ -11,9 +12,9 @@ class MessagesController < ApplicationController
   end
 
   def find
-    @message = Message.where(forum_id: find_forum, user_id: find_user)
+    @message = Message.where(forum_id: find_forum)
     render json: {
-      Message: @message
+      messages: ActiveModel::Serializer::ArraySerializer.new(@message, each_serializer: MessageSerializer)
     }, status: :ok
   end
 
@@ -25,11 +26,12 @@ class MessagesController < ApplicationController
 
   def find_forum
     @forum = Forum.find_by(movie_id: params[:movie_id])
-    @forum.id
-  end
-
-  def find_user
-    @user = User.find_by(username: params[:username])
-    @user.id
+    if @forum
+      @forum.id
+    else
+      @forum = Forum.new(movie_id: params[:movie_id])
+      @forum.save
+      @forum.id
+    end
   end
 end

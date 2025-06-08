@@ -7,8 +7,8 @@ class Message < ApplicationRecord
   private
 
   def broadcast_message
-    ActionCable.server.broadcast('MessageChannel', {
-                                   id:, message:, user_id:
+    ActionCable.server.broadcast('MessagesChannel', {
+                                   Message: BroadcastSerializer.new(self)
                                  })
   end
 end

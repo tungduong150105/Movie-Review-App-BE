@@ -1,3 +1,3 @@
 class WatchlistSerializer < ActiveModel::Serializer
-  attributes :movie_id
+  attributes :type_name, :_id
 end
