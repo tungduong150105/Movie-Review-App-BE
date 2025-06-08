@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :authorized, only: %i[create]
+  skip_before_action :authenticate, only: %i[create]
   rescue_from ActiveRecord::RecordInvalid, with: :handle_invalid_record
 
   def create
@@ -11,17 +11,13 @@ class UsersController < ApplicationController
     }, status: :created
   end
 
-  def me
-    render json: current_user, status: :ok
-  end
-
   private
 
   def user_params
     params.permit(:email, :username, :password)
   end
 
-  def handle_invalid_record(errors)
-    render json: { errors: errors.record.errors.full_message }, status: :unprocessable_entity
+  def handle_invalid_record(exception)
+    render json: { errors: exception.record.errors.full_message }, status: :bad_request
   end
 end

@@ -1,29 +1,31 @@
 class ApplicationController < ActionController::API
-  before_action :authorized
-
+  before_action :authenticate
   def encode_token(payload)
-    JWT.encode(payload, 'MovieReviewApp')
+    JWT.encode(payload, 'moviereviewapp')
   end
 
   def decode_token
     header = request.headers['Authorization']
-    return unless header
-
-    token = header.split(' ')[1]
-    begin
-      JWT.decode(token, 'MovieReviewApp')
-    rescue JWT::DecodeError
-      nil
+    if header
+      token = header.split(' ')[1]
+      begin
+        JWT.decode(token, 'moviereviewapp')
+      rescue JWT::DecodeError
+        nil
+      end
     end
   end
 
   def current_user
-    return unless decode_token
-
-    decode_token[0]['user_id']
+    if decode_token
+      user_id = decode_token[0]['user_id']
+      @user = User.find_by(id: user_id)
+    end
   end
 
-  def authorized
-    render json: { error: 'Not Authorized', message: current_user }, status: :unauthorized unless current_user
+  def authenticate
+    unless !!current_user
+      render json: {message: 'Please log in'}, status: :unauthorized
+    end
   end
 end
