@@ -3,7 +3,8 @@ class RecentController < ApplicationController
 
   def list
     @recent = Recent.where(user_id: current_user.id)
-    render json: { message: 'success', recent: @recent }, status: :ok
+    render json: { message: 'success', recent: ActiveModel::Serializer::ArraySerializer.new(@recent, each_serializer: RecentSerializer) },
+           status: :ok
   end
 
   def create

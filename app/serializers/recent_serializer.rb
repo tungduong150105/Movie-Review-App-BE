@@ -1,4 +1,4 @@
-class WatchlistSerializer < ActiveModel::Serializer
+class RecentSerializer < ActiveModel::Serializer
   attributes :type_name, :_id, :detail
 
   def detail

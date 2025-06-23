@@ -3,7 +3,8 @@ class RatingController < ApplicationController
 
   def list
     @rating = Rating.where(user_id: current_user.id)
-    render json: { message: 'success', rating: @rating }, status: :ok
+    render json: { message: 'success', rating: ActiveModel::Serializer::ArraySerializer.new(@rating, each_serializer: RatingSerializer) },
+           status: :ok
   end
 
   def get

@@ -7,7 +7,7 @@ class WatchlistController < ApplicationController
   end
 
   def create
-    @have = Watchlist.find_by(user_id: current_user.id, _id: params[:_id])
+    @have = Watchlist.find_by(user_id: current_user.id, _id: params[:_id], type_name: params[:type_name])
     @watchlist = Watchlist.new(watchlist_params)
     @watchlist.user_id = current_user.id
     if @have
@@ -19,9 +19,19 @@ class WatchlistController < ApplicationController
     end
   end
 
+  def is_in_watchlist
+    @watchlist = Watchlist.find_by(user_id: current_user.id, type_name: params[:type_name], _id: params[:_id])
+    if @watchlist
+      render json: { message: 'Success' }, status: :ok
+    else
+      render json: { message: 'Not found' }, status: :not_found
+    end
+  end
+
   def list
     list = Watchlist.where(user_id: current_user.id)
-    render json: { message: 'success', watchlist: list }, status: :ok
+    render json: { message: 'success', watchlist: ActiveModel::Serializer::ArraySerializer.new(list, each_serializer: WatchlistSerializer) },
+           status: :ok
   end
 
   def delete
