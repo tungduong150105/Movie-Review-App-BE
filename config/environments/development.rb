@@ -75,6 +75,6 @@ Rails.application.configure do
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.perform_deliveries = true
 
-  config.hosts << '06f9-113-161-73-175.ngrok-free.app'
-  config.hosts << '06f9-113-161-73-175.ngrok-free.app'
+  config.hosts << '7e55-14-169-36-254.ngrok-free.app'
+  config.hosts << '7e55-14-169-36-254.ngrok-free.app'
 end

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get '/watchlist/list', to: 'watchlist#list'
   post '/watchlist/add', to: 'watchlist#create'
   delete '/watchlist/delete', to: 'watchlist#delete'
+  post 'watchlist/is_in_watchlist', to: 'watchlist#is_in_watchlist'
 
   post '/forum/add', to: 'forums#create'
 
@@ -26,4 +27,15 @@ Rails.application.routes.draw do
 
   get 'recent/list', to: 'recent#list'
   post 'recent/add', to: 'recent#create'
+
+  post 'comment/get', to: 'comment#get'
+  post 'comment/add', to: 'comment#create'
+
+  get 'person/get', to: 'person#get'
+  post 'person/add', to: 'person#create'
+  delete 'person/delete', to: 'person#delete'
+  post 'person/is_in_favorite', to: 'person#is_in_favorite'
+
+  post 'movieinfo/add', to: 'movieinfo#create'
+  post 'movieinfo/find', to: 'movieinfo#find'
 end
